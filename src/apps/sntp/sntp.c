@@ -149,18 +149,19 @@
 static void sntp_set_system_time(u32_t sec)
 {
 
+  printf("\n\n\nReached the SNTP time set fucntion\n\n\n\n");
 
   	
   // Time_setUnixEpoch(951782400);
   
-  unsigned int *epochTime;
-  Time_getUnixEpoch(epochTime);
-  printf("\nFreeRTOS clock set to: %i", epochTime);
-  printf("\nTime from SNTP Server: %i", sec);
+  // unsigned int *epochTime;
+  // Time_getUnixEpoch(epochTime);
+  // printf("\nFreeRTOS clock set to: %i", epochTime);
+  // printf("\nTime from SNTP Server: %i", sec);
   
-  Time_setUnixEpoch(sec);
-  Time_getUnixEpoch(epochTime);
-  printf("\nFreeRTOS clock now set to: %i", epochTime);
+  // Time_setUnixEpoch(sec);
+  // Time_getUnixEpoch(epochTime);
+  // printf("\nFreeRTOS clock now set to: %i", epochTime);
   
   
   // for(;;){
