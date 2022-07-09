@@ -126,6 +126,10 @@
 # endif
 #endif /* !SNTP_FRAC_TO_US */
 
+
+
+// static void SNTP_SET_SYSTEM_TIME(u32_t sec);
+
 /* Configure behaviour depending on native, microsecond or second precision.
  * Treat NTP timestamps as signed two's-complement integers. This way,
  * timestamps that have the MSB set simply become negative offsets from
@@ -137,10 +141,36 @@
 #  define SNTP_SET_SYSTEM_TIME_NTP(s, f) \
     SNTP_SET_SYSTEM_TIME_US((u32_t)((s) + DIFF_SEC_1970_2036), SNTP_FRAC_TO_US(f))
 # else
-#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) \
-    SNTP_SET_SYSTEM_TIME((u32_t)((s) + DIFF_SEC_1970_2036))
+// #  define SNTP_SET_SYSTEM_TIME_NTP(s, f) SNTP_SET_SYSTEM_TIME((u32_t)((s) + DIFF_SEC_1970_2036))
+#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) sntp_set_system_time((u32_t)((s) + DIFF_SEC_1970_2036))
 # endif
 #endif /* !SNTP_SET_SYSTEM_TIME_NTP */
+
+static void sntp_set_system_time(u32_t sec)
+{
+
+
+  	
+  // Time_setUnixEpoch(951782400);
+  
+  unsigned int *epochTime;
+  Time_getUnixEpoch(epochTime);
+  printf("\nFreeRTOS clock set to: %i", epochTime);
+  printf("\nTime from SNTP Server: %i", sec);
+  
+  Time_setUnixEpoch(sec);
+  Time_getUnixEpoch(epochTime);
+  printf("\nFreeRTOS clock now set to: %i", epochTime);
+  
+  
+  // for(;;){
+  //   printf("\ncatdog\n");
+  // }
+  // printf("FreeRTOS clock set to: %i", *epochTime);
+  // printf("FreeRTOS clock set to: %i", &epochTime);
+}
+
+
 
 /* Get the system time either natively as NTP timestamp or convert from
  * Unix time in seconds and microseconds. Take care to avoid overflow if the
