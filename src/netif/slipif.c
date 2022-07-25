@@ -307,10 +307,15 @@ slipif_rxbyte(struct netif *netif, u8_t c)
  * @param c received character
  */
 static void
-slipif_rxbyte_input(struct netif *netif, u8_t c)
+slipif_rxbyte_input(struct netif *netif, u8_t *c)
 {
   struct pbuf *p;
-  p = slipif_rxbyte(netif, c);
+  u16_t i = 0;
+  for(i = 0; (i == 0) || ((i < 100) && (p == NULL)); i++)
+  {
+  	  p = slipif_rxbyte(netif, c[i]);
+  }
+
   if (p != NULL) {
     if (netif->input(p, netif) != ERR_OK) {
       pbuf_free(p);
@@ -329,13 +334,13 @@ slipif_rxbyte_input(struct netif *netif, u8_t c)
 static void
 slipif_loop_thread(void *nf)
 {
-  u8_t c;
+  u8_t c[500];
   struct netif *netif = (struct netif *)nf;
   struct slipif_priv *priv = (struct slipif_priv *)netif->state;
 
   while (1) {
-    if (sio_read(priv->sd, &c, 1) > 0) {
-      slipif_rxbyte_input(netif, c);
+    if (sio_read(priv->sd, c, 100) > 0) {
+    		slipif_rxbyte_input(netif, c);
     }
   }
 }
