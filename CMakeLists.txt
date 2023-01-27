@@ -33,3 +33,6 @@ add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 if (TARGET lwipdocs)
   add_dependencies(dist lwipdocs)
 endif()
+
+add_subdirectory(ports)
+add_subdirectory(lwipsrc)
