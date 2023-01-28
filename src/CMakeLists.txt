@@ -29,7 +29,7 @@ target_include_directories(
     PUBLIC
     ${LWIPSRC_INCLUDE})
 
-add_subdirectory(lwipapi)
-add_subdirectory(lwipapps)
-add_subdirectory(lwipcore)
-add_subdirectory(lwipnetif)
+add_subdirectory(api)
+add_subdirectory(apps)
+add_subdirectory(core)
+add_subdirectory(netif)
