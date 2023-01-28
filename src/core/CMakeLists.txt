@@ -10,10 +10,10 @@ file(GLOB LWIPCORE_SOURCE
     ${LWIPAPI_DIR}/ipv6/*.c
 )
 
-add_library {
+add_library (
     ${PROJECT_NAME}
     ${LWIPCORE_SOURCE}
-}
+)
 
 target_include_directories(
     ${PROJECT_NAME}

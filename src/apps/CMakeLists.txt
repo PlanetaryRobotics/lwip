@@ -8,10 +8,10 @@ file(GLOB LWIPAPPS_SOURCE
     ${LWIPAPPS_DIR}/sntp/*.c
 )
 
-add_library {
+add_library (
     ${PROJECT_NAME}
     ${LWIPCORE_SOURCE}
-}
+)
 
 target_include_directories(
     ${PROJECT_NAME}

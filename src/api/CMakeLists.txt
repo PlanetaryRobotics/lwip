@@ -8,10 +8,10 @@ file(GLOB LWIPAPI_SOURCE
     ${LWIPAPI_DIR}/*.c
 )
 
-add_library {
+add_library (
     ${PROJECT_NAME}
     ${LWIPAPI_SOURCE}
-}
+)
 
 target_include_directories(
     ${PROJECT_NAME}

@@ -8,10 +8,10 @@ file(GLOB LWIPNETIF_SOURCE
     ${LWIPNETIF_DIR}/*.c
 )
 
-add_library {
+add_library (
     ${PROJECT_NAME}
     ${LWIPNETIF_SOURCE}
-}
+)
 
 target_include_directories(
     ${PROJECT_NAME}
