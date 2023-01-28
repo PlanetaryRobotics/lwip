@@ -19,14 +19,7 @@ set(LWIPSRC_INCLUDE
     ${LWIPSRC_DIR}/include/netif/ppp/polarssl
 )
 
-file(GLOB PORT_SOURCES 
-    ${PORT_DIR}/freertos/sys_arch.c
-)
-
-
-target_include_directories(
-    ${PROJECT_NAME}
-    PUBLIC
+include_directories(
     ${LWIPSRC_INCLUDE})
 
 add_subdirectory(api)
