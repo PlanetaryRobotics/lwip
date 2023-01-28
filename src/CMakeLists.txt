@@ -18,9 +18,7 @@ set(LWIPSRC_INCLUDE
     ${LWIPSRC_DIR}/include/netif/ppp
     ${LWIPSRC_DIR}/include/netif/ppp/polarssl)
 
-target_include_directories(
-    ${PROJECT_NAME}
-    PUBLIC
+include_directories(
     ${LWIPSRC_INCLUDE})
 
 add_subdirectory(api)

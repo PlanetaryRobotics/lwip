@@ -5,9 +5,9 @@ project(lwipcore LANGUAGES C)
 set(LWIPCORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB LWIPCORE_SOURCE
-    ${LWIPAPI_DIR}/*.c 
-    ${LWIPAPI_DIR}/ipv4/*.c
-    ${LWIPAPI_DIR}/ipv6/*.c)
+    ${LWIPCORE_DIR}/*.c 
+    ${LWIPCORE_DIR}/ipv4/*.c
+    ${LWIPCORE_DIR}/ipv6/*.c)
 
 add_library (
     ${PROJECT_NAME}

@@ -9,7 +9,7 @@ file(GLOB LWIPAPPS_SOURCE
 
 add_library (
     ${PROJECT_NAME}
-    ${LWIPCORE_SOURCE})
+    ${LWIPAPPS_SOURCE})
 
 target_include_directories(
     ${PROJECT_NAME}
