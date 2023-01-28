@@ -18,4 +18,4 @@ target_include_directories(
     PUBLIC
     ${LWIPSRC_INCLUDE})
 
-add_subdirectory(netifppp)
+add_subdirectory(ppp)
