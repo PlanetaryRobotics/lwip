@@ -9,10 +9,10 @@ file(GLOB NETIFPPP_SOURCES
     ${NETIFPPP_DIR}/polarssl/*.c
 )
 
-add_library {
+add_library (
     ${PROJECT_NAME}
     ${NETIFPPP_SOURCES}
-}
+)
 
 target_include_directories(
     ${PROJECT_NAME}
