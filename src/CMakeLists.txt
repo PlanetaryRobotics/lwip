@@ -29,11 +29,6 @@ target_include_directories(
     PUBLIC
     ${LWIPSRC_INCLUDE})
 
-add_library (
-    ${PROJECT_NAME}
-    ${LWIPSRC_SOURCE}
-)
-
 add_subdirectory(api)
 add_subdirectory(apps)
 add_subdirectory(core)
