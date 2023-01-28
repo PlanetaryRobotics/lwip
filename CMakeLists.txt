@@ -34,5 +34,3 @@ if (TARGET lwipdocs)
   add_dependencies(dist lwipdocs)
 endif()
 
-add_subdirectory(contrib/ports)
-add_subdirectory(src)
