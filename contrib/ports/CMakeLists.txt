@@ -9,8 +9,7 @@ set(PORT_INCLUDE
 )
 
 file(GLOB PORT_SOURCES 
-    ${PORT_DIR}/freertos/sys_arch.c
-)
+    ${PORT_DIR}/freertos/sys_arch.c)
 
 add_library(
     ${PROJECT_NAME}

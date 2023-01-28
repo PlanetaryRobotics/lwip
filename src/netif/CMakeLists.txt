@@ -5,13 +5,11 @@ project(lwipnetif LANGUAGES C)
 set(LWIPNETIF_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB LWIPNETIF_SOURCE 
-    ${LWIPNETIF_DIR}/*.c
-)
+    ${LWIPNETIF_DIR}/*.c)
 
 add_library (
     ${PROJECT_NAME}
-    ${LWIPNETIF_SOURCE}
-)
+    ${LWIPNETIF_SOURCE})
 
 target_include_directories(
     ${PROJECT_NAME}

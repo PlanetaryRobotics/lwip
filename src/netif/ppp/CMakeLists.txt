@@ -6,13 +6,11 @@ set(NETIFPPP_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB NETIFPPP_SOURCES
     ${NETIFPPP_DIR}/*.c
-    ${NETIFPPP_DIR}/polarssl/*.c
-)
+    ${NETIFPPP_DIR}/polarssl/*.c)
 
 add_library (
     ${PROJECT_NAME}
-    ${NETIFPPP_SOURCES}
-)
+    ${NETIFPPP_SOURCES})
 
 target_include_directories(
     ${PROJECT_NAME}

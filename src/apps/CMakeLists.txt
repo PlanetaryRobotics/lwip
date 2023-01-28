@@ -5,13 +5,11 @@ project(lwipapps LANGUAGES C)
 set(LWIPAPPS_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB LWIPAPPS_SOURCE
-    ${LWIPAPPS_DIR}/sntp/*.c
-)
+    ${LWIPAPPS_DIR}/sntp/*.c)
 
 add_library (
     ${PROJECT_NAME}
-    ${LWIPCORE_SOURCE}
-)
+    ${LWIPCORE_SOURCE})
 
 target_include_directories(
     ${PROJECT_NAME}

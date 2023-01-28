@@ -7,13 +7,11 @@ set(LWIPCORE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 file(GLOB LWIPCORE_SOURCE
     ${LWIPAPI_DIR}/*.c 
     ${LWIPAPI_DIR}/ipv4/*.c
-    ${LWIPAPI_DIR}/ipv6/*.c
-)
+    ${LWIPAPI_DIR}/ipv6/*.c)
 
 add_library (
     ${PROJECT_NAME}
-    ${LWIPCORE_SOURCE}
-)
+    ${LWIPCORE_SOURCE})
 
 target_include_directories(
     ${PROJECT_NAME}
