@@ -6,10 +6,6 @@ set(PORT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(PORT_INCLUDE 
     ${PORT_DIR}/freertos/include/arch
-)
-
-file(GLOB PORT_SOURCES 
-    ${PORT_DIR}/freertos/sys_arch.c
     ${PORT_DIR}/../../src/include/compact/posix
     ${PORT_DIR}/../../src/include/compact/posix/arpa
     ${PORT_DIR}/../../src/include/compact/posix/net
@@ -23,6 +19,9 @@ file(GLOB PORT_SOURCES
     ${PORT_DIR}/../../src/include/netif/ppp
     ${PORT_DIR}/../../src/include/netif/ppp/polarssl)
 
+file(GLOB PORT_SOURCES 
+    ${PORT_DIR}/freertos/sys_arch.c)
+
 add_library(
     ${PROJECT_NAME}
     ${PORT_SOURCES})
@@ -30,5 +29,4 @@ add_library(
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    ${PORT_INCLUDE}
-    ${LWIPSRC_INCLUDE})
+    ${PORT_INCLUDE})
