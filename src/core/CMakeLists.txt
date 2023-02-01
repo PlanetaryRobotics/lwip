@@ -15,6 +15,6 @@ add_library (
 
 target_include_directories(
     ${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
     ${LWIPSRC_INCLUDE})
 
