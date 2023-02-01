@@ -18,9 +18,12 @@ set(LWIPSRC_INCLUDE
     ${LWIPSRC_DIR}/include/netif/ppp
     ${LWIPSRC_DIR}/include/netif/ppp/polarssl)
 
-# include_directories(
-#     PUBLIC
-#     ${LWIPSRC_INCLUDE})
+add_library(
+    ${PROJECT_NAME}
+    INTERFACE)
+include_directories(
+    INTERFACE
+    ${LWIPSRC_INCLUDE})
 
 add_subdirectory(api)
 add_subdirectory(apps)

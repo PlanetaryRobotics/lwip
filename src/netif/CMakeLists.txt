@@ -13,7 +13,7 @@ add_library (
 
 target_include_directories(
     ${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
     ${LWIPSRC_INCLUDE})
 
 add_subdirectory(ppp)
