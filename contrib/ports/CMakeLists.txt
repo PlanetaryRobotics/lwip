@@ -18,4 +18,5 @@ add_library(
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    ${PORT_INCLUDE})
+    ${PORT_INCLUDE}
+    ${LWIPSRC_INCLUDE})
