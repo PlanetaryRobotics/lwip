@@ -14,6 +14,11 @@ add_library (
 target_include_directories(
     ${PROJECT_NAME}
     PRIVATE
+    ${LWIPSRC_DIR}/include/lwip)
+
+target_include_directories(
+    ${PROJECT_NAME}
+    PRIVATE
     ${LWIPSRC_INCLUDE})
 
 add_subdirectory(ppp)
