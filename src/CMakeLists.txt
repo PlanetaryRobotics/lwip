@@ -5,11 +5,6 @@ project(lwipsrc LANGUAGES C)
 set(LWIPSRC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(LWIPSRC_INCLUDE 
-    ${LWIPSRC_DIR}/include/compact/posix
-    ${LWIPSRC_DIR}/include/compact/posix/arpa
-    ${LWIPSRC_DIR}/include/compact/posix/net
-    ${LWIPSRC_DIR}/include/compact/posix/sys
-    ${LWIPSRC_DIR}/include/compact/stdc
     ${LWIPSRC_DIR}/include/lwip
     ${LWIPSRC_DIR}/include/lwip/apps
     ${LWIPSRC_DIR}/include/lwip/priv
