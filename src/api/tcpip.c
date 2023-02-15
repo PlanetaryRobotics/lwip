@@ -443,9 +443,14 @@ tcpip_send_msg_wait_sem(tcpip_callback_fn fn, void *apimsg, sys_sem_t *sem)
 {
 #if LWIP_TCPIP_CORE_LOCKING
   LWIP_UNUSED_ARG(sem);
-  LOCK_TCPIP_CORE();
+  /* NOTE: Hacky solution to the tx2i and iOBC contention issue. 
+  Originally tx2i and iobc must wait for other to finish before the 
+  other one begins transmisson. 
+  Removing the lock allows then to run simulaniously
+  Might result in bad checksum or courrpt packets occastionally*/
+  //LOCK_TCPIP_CORE();
   fn(apimsg);
-  UNLOCK_TCPIP_CORE();
+  //UNLOCK_TCPIP_CORE();
   return ERR_OK;
 #else /* LWIP_TCPIP_CORE_LOCKING */
   TCPIP_MSG_VAR_DECLARE(msg);
