@@ -60,6 +60,8 @@
 #include "lwip/ip_addr.h"
 #include "lwip/pbuf.h"
 #include "lwip/dhcp.h"
+#include "time_manager/time_manager.h"
+
 
 #include <string.h>
 #include <time.h>
@@ -149,6 +151,8 @@
 static void sntp_set_system_time(u32_t sec)
 {
   Time_setUnixEpoch(sec);
+  SetZeroSubseconds();
+  
 }
 
 
