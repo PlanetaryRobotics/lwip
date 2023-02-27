@@ -121,6 +121,9 @@ static err_t slipif_output(struct netif *netif, struct pbuf *p) {
     struct pbuf *q;
     u16_t i;
     u8_t c;
+    u8_t array[1500] = {0};
+    u16_t byte_counter = 0;
+    u8_t escape = 0;
 
     LWIP_ASSERT("netif != NULL", (netif != NULL));
     LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
@@ -132,7 +135,9 @@ static err_t slipif_output(struct netif *netif, struct pbuf *p) {
 
     /* Send pbuf out on the serial I/O device. */
     /* Start with packet delimiter. */
-    sio_send(SLIP_END, priv->sd);
+    array[byte_counter] = SLIP_END;
+    byte_counter++;
+    //sio_send(SLIP_END, priv->sd);
 
     for (q = p; q != NULL; q = q->next) {
         for (i = 0; i < q->len; i++) {
@@ -140,23 +145,38 @@ static err_t slipif_output(struct netif *netif, struct pbuf *p) {
             switch (c) {
                 case SLIP_END:
                     /* need to escape this byte (0xC0 -> 0xDB, 0xDC) */
-                    sio_send(SLIP_ESC, priv->sd);
-                    sio_send(SLIP_ESC_END, priv->sd);
+                    //sio_send(SLIP_ESC, priv->sd);
+                    //sio_send(SLIP_ESC_END, priv->sd);
+                    array[byte_counter] = SLIP_ESC;
+                    byte_counter++;
+                    array[byte_counter] = SLIP_ESC_END;
+                    byte_counter++;
+                    escape++;
                     break;
                 case SLIP_ESC:
                     /* need to escape this byte (0xDB -> 0xDB, 0xDD) */
-                    sio_send(SLIP_ESC, priv->sd);
-                    sio_send(SLIP_ESC_ESC, priv->sd);
+                    //sio_send(SLIP_ESC, priv->sd);
+                    //sio_send(SLIP_ESC_ESC, priv->sd);
+                    array[byte_counter] = SLIP_ESC;
+                    byte_counter++;
+                    array[byte_counter] = SLIP_ESC_ESC;
+                    byte_counter++;
+                    escape++;
                     break;
                 default:
                     /* normal byte - no need for escaping */
-                    sio_send(c, priv->sd);
+                    //sio_send(c, priv->sd);
+                    array[byte_counter] = c;
+                    byte_counter++;
                     break;
             }
         }
     }
     /* End with packet delimiter. */
-    sio_send(SLIP_END, priv->sd);
+    //sio_send(SLIP_END, priv->sd);
+    array[byte_counter] = SLIP_END;
+    byte_counter++;
+    sio_send_string(array,priv->sd,byte_counter);
     return ERR_OK;
 }
 
