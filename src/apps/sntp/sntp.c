@@ -60,7 +60,7 @@
 #include "lwip/ip_addr.h"
 #include "lwip/pbuf.h"
 #include "lwip/dhcp.h"
-#include "time_manager/time_manager.h"
+#include "time_manager.h"
 
 
 #include <string.h>
