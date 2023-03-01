@@ -152,6 +152,10 @@ static void sntp_set_system_time(u32_t sec)
 {
   Time_setUnixEpoch(sec);
   SetZeroSubseconds();
+
+  //TODO: Remove before merge
+  //Added at the request for endurance testing
+  sntp_stop();
   
 }
 
