@@ -135,6 +135,13 @@ u32_t sio_write(sio_fd_t fd, const u8_t *data, u32_t len);
 void sio_read_abort(sio_fd_t fd);
 #endif
 
+/**
+* Write a char to output data stream
+* @param 	str		pointer to a zero terminated string
+* @param	siostat siostatus struct, contains sio instance data, given by sio_open
+*/
+void sio_send_string(u8_t *str, sio_fd_t * siostat, u16_t len);
+
 #ifdef __cplusplus
 }
 #endif

@@ -40,7 +40,7 @@ void sio_expect_string(u8_t *str, sio_status_t * siostat);
 * @param 	str		pointer to a zero terminated string
 * @param	siostat siostatus struct, contains sio instance data, given by sio_open
 */
-void sio_send_string(u8_t *str, sio_status_t * siostat);
+//void sio_send_string(u8_t *str, sio_status_t * siostat);
 
 /**
 *	Flush outbuffer (send everything in buffer now), useful if some layer below is 
@@ -57,4 +57,3 @@ void sio_flush( sio_status_t * siostat );
 void sio_change_baud( sioBaudrates baud, sio_status_t * siostat );
 
 #endif
-

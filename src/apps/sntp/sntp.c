@@ -60,6 +60,8 @@
 #include "lwip/ip_addr.h"
 #include "lwip/pbuf.h"
 #include "lwip/dhcp.h"
+#include "time_manager.h"
+
 
 #include <string.h>
 #include <time.h>
@@ -126,6 +128,10 @@
 # endif
 #endif /* !SNTP_FRAC_TO_US */
 
+
+
+// static void SNTP_SET_SYSTEM_TIME(u32_t sec);
+
 /* Configure behaviour depending on native, microsecond or second precision.
  * Treat NTP timestamps as signed two's-complement integers. This way,
  * timestamps that have the MSB set simply become negative offsets from
@@ -137,10 +143,27 @@
 #  define SNTP_SET_SYSTEM_TIME_NTP(s, f) \
     SNTP_SET_SYSTEM_TIME_US((u32_t)((s) + DIFF_SEC_1970_2036), SNTP_FRAC_TO_US(f))
 # else
-#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) \
-    SNTP_SET_SYSTEM_TIME((u32_t)((s) + DIFF_SEC_1970_2036))
+// #  define SNTP_SET_SYSTEM_TIME_NTP(s, f) SNTP_SET_SYSTEM_TIME((u32_t)((s) + DIFF_SEC_1970_2036))
+#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) sntp_set_system_time((u32_t)((s) + DIFF_SEC_1970_2036),f)
 # endif
 #endif /* !SNTP_SET_SYSTEM_TIME_NTP */
+
+static void sntp_set_system_time(u32_t sec, u32_t frac)
+{
+
+  //convert ntp frac to microseconds
+  //useconds is divided by 1000 to get ms
+  u32_t subsecond = SNTP_FRAC_TO_US(frac) / 1000;
+  Time_setUnixEpoch(sec);
+  //set subseconds (milliseconds)
+  SetSubseconds(subsecond);
+
+  //Added to only sync one
+  sntp_stop();
+  
+}
+
+
 
 /* Get the system time either natively as NTP timestamp or convert from
  * Unix time in seconds and microseconds. Take care to avoid overflow if the
@@ -329,7 +352,6 @@ sntp_process(const struct sntp_timestamps *timestamps)
 #endif /* SNTP_COMP_ROUNDTRIP */
 
   SNTP_SET_SYSTEM_TIME_NTP(sec, frac);
-  LWIP_UNUSED_ARG(frac); /* might be unused if only seconds are set */
   LWIP_DEBUGF(SNTP_DEBUG_TRACE, ("sntp_process: %s, %" U32_F " us\n",
                                  sntp_format_time(sec), SNTP_FRAC_TO_US(frac)));
 }
@@ -681,6 +703,9 @@ sntp_init(void)
 #error SNTP_SERVER_ADDRESS string not supported SNTP_SERVER_DNS==0
 #endif
 #endif /* SNTP_SERVER_ADDRESS */
+
+  //set listen mode. Tx2i must set the mode field to be broadcast
+  sntp_opmode = SNTP_OPMODE_LISTENONLY;
 
   if (sntp_pcb == NULL) {
     sntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
