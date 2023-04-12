@@ -144,17 +144,17 @@
     SNTP_SET_SYSTEM_TIME_US((u32_t)((s) + DIFF_SEC_1970_2036), SNTP_FRAC_TO_US(f))
 # else
 // #  define SNTP_SET_SYSTEM_TIME_NTP(s, f) SNTP_SET_SYSTEM_TIME((u32_t)((s) + DIFF_SEC_1970_2036))
-#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) sntp_set_system_time((u32_t)((s) + DIFF_SEC_1970_2036))
+#  define SNTP_SET_SYSTEM_TIME_NTP(s, f) sntp_set_system_time((u32_t)((s) + DIFF_SEC_1970_2036),f)
 # endif
 #endif /* !SNTP_SET_SYSTEM_TIME_NTP */
 
-static void sntp_set_system_time(u32_t sec)
+static void sntp_set_system_time(u32_t sec, u32_t useconds)
 {
   Time_setUnixEpoch(sec);
-  SetZeroSubseconds();
+  //set subseconds. usecond is micro so divide by 1000 to get miliseconds 
+  SetSubseconds(useconds / 1000);
 
-  //TODO: Remove before merge
-  //Added at the request for endurance testing
+  //Added to only sync one
   sntp_stop();
   
 }
@@ -700,6 +700,9 @@ sntp_init(void)
 #error SNTP_SERVER_ADDRESS string not supported SNTP_SERVER_DNS==0
 #endif
 #endif /* SNTP_SERVER_ADDRESS */
+
+  //set listen mode. Tx2i must set the mode field to be broadcast
+  sntp_opmode = SNTP_OPMODE_LISTENONLY;
 
   if (sntp_pcb == NULL) {
     sntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
