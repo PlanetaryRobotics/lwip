@@ -148,11 +148,15 @@
 # endif
 #endif /* !SNTP_SET_SYSTEM_TIME_NTP */
 
-static void sntp_set_system_time(u32_t sec, u32_t useconds)
+static void sntp_set_system_time(u32_t sec, u32_t frac)
 {
+
+  //convert ntp frac to microseconds
+  //useconds is divided by 1000 to get ms
+  u32_t subsecond = SNTP_FRAC_TO_US(frac) / 1000;
   Time_setUnixEpoch(sec);
-  //set subseconds. usecond is micro so divide by 1000 to get miliseconds 
-  SetSubseconds(useconds / 1000);
+  //set subseconds (milliseconds)
+  SetSubseconds(subsecond);
 
   //Added to only sync one
   sntp_stop();
@@ -348,7 +352,6 @@ sntp_process(const struct sntp_timestamps *timestamps)
 #endif /* SNTP_COMP_ROUNDTRIP */
 
   SNTP_SET_SYSTEM_TIME_NTP(sec, frac);
-  LWIP_UNUSED_ARG(frac); /* might be unused if only seconds are set */
   LWIP_DEBUGF(SNTP_DEBUG_TRACE, ("sntp_process: %s, %" U32_F " us\n",
                                  sntp_format_time(sec), SNTP_FRAC_TO_US(frac)));
 }
