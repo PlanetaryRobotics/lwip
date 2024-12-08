@@ -148,6 +148,8 @@
 # endif
 #endif /* !SNTP_SET_SYSTEM_TIME_NTP */
 
+u32_t global_subseconds;
+
 static void sntp_set_system_time(u32_t sec, u32_t frac)
 {
 
@@ -156,7 +158,7 @@ static void sntp_set_system_time(u32_t sec, u32_t frac)
   u32_t subsecond = SNTP_FRAC_TO_US(frac) / 1000;
   Time_setUnixEpoch(sec);
   //set subseconds (milliseconds)
-  SetSubseconds(subsecond);
+  global_subseconds = subsecond;
 
   //Added to only sync one
   sntp_stop();
